@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhotoShare - Home</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/index.html">
+                <i class="fas fa-camera"></i> PhotoShare
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/index.html">
+                            <i class="fas fa-home"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item" id="creatorNavItem">
+                        <a class="nav-link" href="/creator.html">
+                            <i class="fas fa-upload"></i> Creator Area
+                        </a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div id="authButtons" class="d-flex gap-2">
+                        <a href="/login.html" class="btn btn-outline-light btn-sm">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </div>
+                    <div id="userMenu" class="dropdown d-none">
+                        <button class="btn btn-outline-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> <span id="usernameDisplay"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" id="logoutBtn">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-4">
+        <!-- Search Bar -->
+        <div class="row mb-4">
+            <div class="col-md-8 offset-md-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search photos by title, caption, or location...">
+                    <button class="btn btn-primary" type="button" id="searchBtn">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button class="btn btn-outline-secondary" type="button" id="clearSearchBtn">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Photos Grid -->
+        <div id="photosContainer">
+            <!-- Loading spinner -->
+            <div id="loadingSpinner" class="text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading photos...</p>
+            </div>
+
+            <!-- Photos will be inserted here -->
+            <div id="photosList" class="row g-3"></div>
+
+            <!-- Empty state -->
+            <div id="emptyState" class="text-center py-5 d-none">
+                <i class="fas fa-images fa-4x text-muted mb-3"></i>
+                <h4 class="text-muted">No photos found</h4>
+                <p class="text-muted">Be the first to share a photo!</p>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <nav id="pagination" class="mt-4 d-none">
+            <ul class="pagination justify-content-center">
+                <!-- Pagination will be inserted here -->
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Photo Detail Modal -->
+    <div class="modal fade" id="photoDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="photoModalTitle">Photo Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="photoModalBody">
+                    <!-- Photo details will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script type="module" src="js/home.js"></script>
+</body>
+</html>
