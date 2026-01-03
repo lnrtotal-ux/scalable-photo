@@ -82,10 +82,18 @@ function createExpressHandler(handler) {
                 debug: console.debug,
             };
 
+            // Build absolute URL so handlers using new URL() do not throw
+            const fullUrl = (() => {
+                const proto = req.get('x-forwarded-proto') || req.protocol || 'http';
+                const host = req.get('host');
+                const path = req.originalUrl || req.url;
+                return host ? `${proto}://${host}${path}` : path;
+            })();
+
             // Normalize request to mimic Azure Functions request
             const request = {
                 method: req.method,
-                url: req.originalUrl || req.url,
+                url: fullUrl,
                 headers: {
                     get: (name) => req.get(name)
                 },

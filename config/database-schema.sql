@@ -63,7 +63,7 @@ INSERT INTO Users (Username, Email, PasswordHash, Role)
 VALUES (
     'admin',
     'admin@photoshare.local',
-    '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGga31lW',
+    '$2a$10$T1AvT5wFib5NpNqYYC7pxOXDIuuTXzLU5p72XLjagK4n7kxpo5qVe',
     'admin'
 );
 
@@ -72,7 +72,7 @@ INSERT INTO Users (Username, Email, PasswordHash, Role)
 VALUES (
     'john_creator',
     'john@photoshare.local',
-    '$2b$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+    '$2a$10$GbqVpzG.zFWZKzMn5avrIu7iASoEFn1zaNtl35KmAaT1brgLeXGVu',
     'creator'
 );
 
@@ -81,6 +81,6 @@ INSERT INTO Users (Username, Email, PasswordHash, Role)
 VALUES (
     'jane_user',
     'jane@photoshare.local',
-    '$2b$10$WNH3WC4iN4t1n5jlDzF0y.mRdGz4QP2DZNuqR2aH3g8Fy/MzOGR8K',
+    '$2a$10$4YdAL6afFymSk6MeWo1aaueYwpaBYXlBu0G/6d9Nbl4YrgQlHTu9W',
     'consumer'
 );

@@ -1,11 +1,11 @@
 const { query } = require('../utils/db');
 async function handler(request, context) {
     try {
-        const url = new URL(request.url || 'http://localhost');
-        const page = parseInt(url.searchParams.get('page')) || 1;
-        const limit = parseInt(url.searchParams.get('limit')) || 20;
-        const search = url.searchParams.get('search') || '';
-        const userId = url.searchParams.get('userId');
+        const queryParams = request.query || {};
+        const page = parseInt(queryParams.page, 10) || 1;
+        const limit = parseInt(queryParams.limit, 10) || 20;
+        const search = queryParams.search || '';
+        const userId = queryParams.userId;
 
         const offset = (page - 1) * limit;
 

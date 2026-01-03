@@ -18,7 +18,7 @@
     <div class="container">
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-5">
-                <div class="card shadow">
+                <div class="card shadow" id="loginCard">
                     <div class="card-body p-5">
                         <div class="text-center mb-4">
                             <i class="fas fa-camera fa-3x text-primary mb-3"></i>
@@ -131,17 +131,19 @@
         const loginForm = document.getElementById('loginForm');
         const registerForm = document.getElementById('registerForm');
         const registerCard = document.getElementById('registerCard');
+        const loginCard = document.getElementById('loginCard');
         const showRegisterBtn = document.getElementById('showRegisterBtn');
         const hideRegisterBtn = document.getElementById('hideRegisterBtn');
 
         // Toggle register form
         showRegisterBtn.addEventListener('click', () => {
             registerCard.classList.remove('d-none');
-            showRegisterBtn.scrollIntoView({ behavior: 'smooth' });
+            loginCard?.classList.add('d-none');
         });
 
         hideRegisterBtn.addEventListener('click', () => {
             registerCard.classList.add('d-none');
+            loginCard?.classList.remove('d-none');
             registerForm.reset();
             document.getElementById('regErrorMessage').classList.add('d-none');
         });
