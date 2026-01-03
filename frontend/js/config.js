@@ -6,10 +6,10 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
         baseUrl: 'http://localhost:3000/api'
     };
 }
-// Production environment on Azure
+// Production: Blob static site must call the App Service API via absolute URL
 else {
     window.API_CONFIG = {
-        baseUrl: '/api'  // Relative path - works with App Service
+        baseUrl: 'https://scalable-photo-app.azurewebsites.net/api'
     };
 }
 
