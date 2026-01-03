@@ -60,8 +60,11 @@ app.use((err, req, res, next) => {
 // Wrapper to convert Azure Function handlers to Express middleware
 function createExpressHandler(handler) {
     return async (req, res, next) => {
+        if (typeof handler !== 'function') {
+            console.error('Handler is not a function for path', req.path);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
         try {
-            // Create a mock context object similar to Azure Functions
             const context = {
                 log: console.log,
                 error: console.error,
@@ -69,10 +72,23 @@ function createExpressHandler(handler) {
                 debug: console.debug,
             };
 
-            // Call the Azure Function handler
-            const result = await handler(req, context);
+            // Normalize request to mimic Azure Functions request
+            const request = {
+                method: req.method,
+                url: req.originalUrl || req.url,
+                headers: {
+                    get: (name) => req.get(name)
+                },
+                query: req.query,
+                params: req.params,
+                body: req.body,
+                json: async () => req.body,
+                text: async () => (typeof req.body === 'string' ? req.body : JSON.stringify(req.body || {})),
+                formData: req.is('multipart/form-data') ? req.body : async () => req.body
+            };
 
-            // Send the response
+            const result = await handler(request, context);
+
             if (result) {
                 res.status(result.status || 200).json(result.jsonBody || result);
             } else {
