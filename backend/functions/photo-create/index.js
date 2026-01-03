@@ -1,4 +1,3 @@
-const { app } = require('@azure/functions');
 const { query } = require('../utils/db');
 const { authenticate, hasRole } = require('../utils/auth');
 const { uploadPhoto } = require('../utils/storage');
@@ -64,13 +63,3 @@ async function handler(request, context) {
 }
 
 module.exports = { handler };
-            context.error('Create photo error:', error);
-            return {
-                status: 500,
-                jsonBody: {
-                    error: 'Internal server error'
-                }
-            };
-        }
-    }
-});
