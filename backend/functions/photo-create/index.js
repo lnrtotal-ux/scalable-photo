@@ -15,18 +15,20 @@ async function handler(request, context) {
             return { status: 403, jsonBody: { error: 'Only creators can upload photos' } };
         }
 
-        const formData = await request.formData();
-        const title = formData.get('title');
-        const caption = formData.get('caption') || '';
-        const location = formData.get('location') || '';
-        const photoFile = formData.get('photo');
+        // Get form fields from body (multer parses multipart form fields into req.body)
+        const title = request.body?.title;
+        const caption = request.body?.caption || '';
+        const location = request.body?.location || '';
+        
+        // Get file from multer (attached by Express wrapper)
+        const photoFile = request.file;
 
         if (!title || !photoFile) {
             return { status: 400, jsonBody: { error: 'Title and photo file are required' } };
         }
 
-        const buffer = Buffer.from(await photoFile.arrayBuffer());
-        const blobUrl = await uploadPhoto(buffer, photoFile.name, photoFile.type);
+        // Upload to blob storage using multer's buffer
+        const blobUrl = await uploadPhoto(photoFile.buffer, photoFile.originalname, photoFile.mimetype);
 
         const result = await query(
             `INSERT INTO Photos (UserId, Title, Caption, Location, BlobUrl) 

@@ -2,7 +2,21 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const multer = require('multer');
 require('dotenv').config();
+
+// Configure multer for memory storage (files stored in buffer)
+const upload = multer({
+    storage: multer.memoryStorage(),
+    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype.startsWith('image/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only image files are allowed'), false);
+        }
+    }
+});
 
 // Import API routes
 const authLoginHandler = require('./functions/auth-login');
@@ -47,7 +61,7 @@ app.post('/api/auth/register', createExpressHandler(authRegisterHandler.handler)
 // Photo endpoints
 app.get('/api/photos', createExpressHandler(photosListHandler.handler));
 app.get('/api/photos/:id', createExpressHandler(photoGetHandler.handler));
-app.post('/api/photos', createExpressHandler(photoCreateHandler.handler));
+app.post('/api/photos', upload.single('photo'), createExpressHandler(photoCreateHandler.handler));
 app.put('/api/photos/:id', createExpressHandler(photoUpdateHandler.handler));
 app.delete('/api/photos/:id', createExpressHandler(photoDeleteHandler.handler));
 
@@ -102,7 +116,8 @@ function createExpressHandler(handler) {
                 body: req.body,
                 json: async () => req.body,
                 text: async () => (typeof req.body === 'string' ? req.body : JSON.stringify(req.body || {})),
-                formData: req.is('multipart/form-data') ? req.body : async () => req.body
+                // Provide file data from multer if available
+                file: req.file || null
             };
 
             const result = await handler(request, context);
