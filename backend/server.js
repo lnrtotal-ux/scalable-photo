@@ -46,14 +46,6 @@ app.post('/api/photos/:id/like', createExpressHandler(photoLikeHandler.handler))
 app.post('/api/photos/:id/comment', createExpressHandler(commentAddHandler.handler));
 app.delete('/api/comments/:id', createExpressHandler(commentDeleteHandler.handler));
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '../frontend')));
-
-// Fallback to index.html for SPA
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/index.html'));
-});
-
 // 404 handler
 app.use((req, res) => {
     res.status(404).json({ error: 'Not Found' });
