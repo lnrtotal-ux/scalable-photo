@@ -1,8 +1,16 @@
-// API Configuration
-const API_CONFIG = {
-    baseUrl: 'http://localhost:7071/api',
-    // For production, update this to your Azure Functions URL:
-    // baseUrl: 'https://your-function-app.azurewebsites.net/api'
-};
+// API Configuration for PhotoShare
 
-export default API_CONFIG;
+// Development environment
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    window.API_CONFIG = {
+        baseUrl: 'http://localhost:3000/api'
+    };
+}
+// Production environment on Azure
+else {
+    window.API_CONFIG = {
+        baseUrl: '/api'  // Relative path - works with App Service
+    };
+}
+
+export default window.API_CONFIG;
